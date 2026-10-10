@@ -1,0 +1,32 @@
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  min-height: 36px;
+}
+
+.status__dot_status_ok {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4dd865;
+  flex-shrink: 0;
+}
+
+.status__dot_status_error {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-danger);
+  flex-shrink: 0;
+}
+
+.status__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

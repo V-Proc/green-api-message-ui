@@ -1,0 +1,69 @@
+.message-item {
+  display: flex;
+  padding: 2px 16px;
+
+  &_out {
+    justify-content: flex-end;
+  }
+}
+
+.message-item__date {
+  align-self: center;
+  margin: 12px 0;
+  padding: 3px 10px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.message-item__bubble {
+  max-width: min(65%, 560px);
+  padding: 8px 12px 6px;
+  border-radius: var(--radius-bubble);
+  background: var(--color-bubble-in);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+  &_out {
+    background: var(--color-bubble-out);
+  }
+
+  &_failed {
+    background: var(--color-bubble-out);
+    opacity: 0.65;
+  }
+}
+
+.message-item__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message-item__meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.message-item__status {
+  color: var(--color-text-secondary);
+
+  &_failed {
+    color: var(--color-danger);
+  }
+}
+
+.message-item__time {
+  color: inherit;
+}
+
+.message-item__tick {
+  color: var(--color-text-secondary);
+}

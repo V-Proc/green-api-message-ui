@@ -1,0 +1,15 @@
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--color-bg-chat);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.message-list__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 0 10px;
+  min-height: 100%;
+}
