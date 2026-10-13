@@ -1,7 +1,7 @@
 .field {
   width: 100%;
   padding: 11px 14px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-input);
   color: var(--color-text);

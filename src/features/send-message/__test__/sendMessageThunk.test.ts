@@ -1,8 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import GreenApi from '@/shared/api/GreenApi';
+import { createTestStore } from '@/shared/lib/TestUtils';
+
 import { connect } from '@/features/instance-connection';
 import { sendMessage } from '@/features/send-message';
-import { createTestStore } from '@/shared/lib/TestUtils';
 
 vi.mock('@/shared/api/GreenApi', () => ({
   default: {

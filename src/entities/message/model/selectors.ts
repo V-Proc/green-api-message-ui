@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+
 import type { RootState } from '@/app/store';
 
 const selectMessagesState = (state: RootState) => state.messages;

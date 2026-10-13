@@ -1,9 +1,13 @@
-import { describe, expect, it } from 'vitest';
 import { screen } from '@testing-library/react';
-import { addMessage } from '@/entities/message';
-import type { Message } from '@/entities/message';
-import MessageList from '@/widgets/chat/ui/MessageList';
+import { describe, expect, it } from 'vitest';
+
 import { createTestStore, renderWithStore } from '@/shared/lib/TestUtils';
+
+import { addMessage } from '@/entities/message';
+
+import MessageList from '@/widgets/chat/ui/MessageList';
+
+import type { Message } from '@/entities/message';
 
 function buildMessage(id: string, day: number, text: string): Message {
   return {

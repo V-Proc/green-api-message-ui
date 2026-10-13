@@ -3,6 +3,8 @@ import {
   GREEN_API_METHODS,
   RECEIVE_TIMEOUT_SECONDS,
 } from '@/shared/config/GreenApiConfig';
+import { GreenApiError } from '@/shared/lib/GreenApiError';
+
 import type {
   GreenApiErrorPayload,
   InstanceCredentials,
@@ -10,7 +12,6 @@ import type {
   SendMessageRequest,
   SendMessageResponse,
 } from '@/shared/api/Types';
-import { GreenApiError } from '@/shared/lib/GreenApiError';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE';
 

@@ -1,10 +1,13 @@
-import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+
+import { createTestStore } from '@/shared/lib/TestUtils';
+
 import { connect, setConnectionError } from '@/features/instance-connection';
 import { ConnectionStatus } from '@/features/receive-messages';
 import { setPollingError } from '@/features/receive-messages';
-import { createTestStore } from '@/shared/lib/TestUtils';
+
 import type { ReactElement } from 'react';
 
 function renderStatus(ui: ReactElement, store: ReturnType<typeof createTestStore>) {

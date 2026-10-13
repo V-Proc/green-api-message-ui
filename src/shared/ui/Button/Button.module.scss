@@ -7,7 +7,7 @@
   border: none;
   border-radius: var(--radius-md);
   background: var(--color-accent);
-  color: var(--color-text);
+  color: var(--color-text-on-accent);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -23,12 +23,12 @@
   }
 
   &_view_secondary {
-    background: transparent;
+    background: var(--color-panel);
     border: 1px solid var(--color-border);
     color: var(--color-text-secondary);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--color-surface-muted);
     }
   }
 
@@ -38,6 +38,7 @@
     height: 44px;
     border-radius: 50%;
     background: var(--color-accent);
+    color: var(--color-text-on-accent);
     flex-shrink: 0;
   }
 }

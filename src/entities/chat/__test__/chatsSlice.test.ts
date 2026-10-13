@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+
+import { createTestStore } from '@/shared/lib/TestUtils';
+
 import {
   selectChat,
   selectChats,
@@ -6,7 +9,6 @@ import {
   selectSelectedChatId,
   upsertChat,
 } from '@/entities/chat';
-import { createTestStore } from '@/shared/lib/TestUtils';
 
 describe('chatsSlice', () => {
   it('upsertChat создаёт новый чат и добавляет его в ids', () => {

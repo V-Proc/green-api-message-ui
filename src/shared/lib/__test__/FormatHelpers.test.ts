@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { formatChatTitle, formatTime } from '@/shared/lib/FormatHelpers';
 
 describe('FormatHelpers', () => {

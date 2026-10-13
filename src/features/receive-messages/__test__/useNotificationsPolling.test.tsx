@@ -1,10 +1,12 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import GreenApi from '@/shared/api/GreenApi';
+import { createTestStore } from '@/shared/lib/TestUtils';
+
 import { connect } from '@/features/instance-connection';
 import { useNotificationsPolling } from '@/features/receive-messages';
-import { createTestStore } from '@/shared/lib/TestUtils';
 
 vi.mock('@/shared/api/GreenApi', () => ({
   default: {

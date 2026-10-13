@@ -1,9 +1,10 @@
 .message-list {
+  position: relative;
   flex: 1;
   overflow-y: auto;
-  background: var(--color-bg-chat);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 22px 22px;
+  background:
+    linear-gradient(rgba(240, 242, 245, 0.55), rgba(240, 242, 245, 0.55)),
+    url('../../../shared/ui/images/pexels-jan-van-der-wolf.webp') center / cover fixed no-repeat;
 }
 
 .message-list__inner {

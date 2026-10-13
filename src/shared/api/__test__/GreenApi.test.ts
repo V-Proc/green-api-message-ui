@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import GreenApi from '@/shared/api/GreenApi';
 import { GreenApiError } from '@/shared/lib/GreenApiError';
 

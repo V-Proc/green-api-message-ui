@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import { chatsReducer } from '@/entities/chat';
 import { messagesReducer } from '@/entities/message';
+
 import { connectionReducer } from '@/features/instance-connection';
 import { pollingReducer } from '@/features/receive-messages';
 

@@ -1,23 +1,30 @@
 :root {
-  --color-bg: #17212b;
-  --color-bg-sidebar: #0e1621;
-  --color-bg-chat: #0e1621;
-  --color-bg-input: #242f3d;
-  --color-panel: #1c2733;
-  --color-bubble-in: #1c2733;
-  --color-bubble-out: #2b5278;
-  --color-text: #ffffff;
-  --color-text-secondary: #8f9ca8;
-  --color-accent: #62a8f0;
-  --color-accent-hover: #4f96e0;
-  --color-danger: #e75a5a;
-  --color-border: #253340;
+  // Telegram/Max light palette (see AGENTS.md-level design decisions):
+  // #FFFFFF — lists, settings, cards, incoming messages
+  // #F0F2F5 — side panels, separators, system plates
+  // #0077FF — action buttons, active tabs, icons, links, status indicators
+  --color-bg: #f0f2f5;
+  --color-bg-sidebar: #f0f2f5;
+  --color-bg-chat: #f0f2f5;
+  --color-bg-input: #ffffff;
+  --color-panel: #ffffff;
+  --color-surface-muted: #f0f2f5;
+  --color-bubble-in: #ffffff;
+  --color-bubble-out: #0077ff;
+  --color-text: #1c1c1e;
+  --color-text-secondary: #8e8e93;
+  --color-text-on-accent: #ffffff;
+  --color-accent: #0077ff;
+  --color-accent-hover: #0063d1;
+  --color-danger: #e53935;
+  --color-border: #e1e5eb;
 
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-bubble: 14px;
 
-  --shadow-panel: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 2px 12px rgba(16, 24, 40, 0.08);
+  --shadow-bubble: 0 1px 2px rgba(16, 24, 40, 0.1);
 }
 
 *,

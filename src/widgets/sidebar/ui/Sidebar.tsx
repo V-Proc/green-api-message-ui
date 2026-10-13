@@ -1,9 +1,14 @@
-import { useState, type FormEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
-import { selectChat, selectChats, selectSelectedChatId, upsertChat } from '@/entities/chat';
-import { ConnectionStatus } from '@/features/receive-messages';
-import { Avatar, Button, TextField } from '@/shared/ui';
+import { type FormEvent,useState } from 'react';
+
 import { formatChatTitle, formatTime } from '@/shared/lib/FormatHelpers';
+import { Avatar, Button, TextField } from '@/shared/ui';
+
+import { selectChat, selectChats, selectSelectedChatId, upsertChat } from '@/entities/chat';
+
+import { ConnectionStatus } from '@/features/receive-messages';
+
+import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
+
 import styles from './Sidebar.module.scss';
 
 export default function Sidebar() {

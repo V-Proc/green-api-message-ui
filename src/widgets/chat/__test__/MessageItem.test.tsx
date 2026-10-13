@@ -1,6 +1,8 @@
-import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+
 import MessageItem from '@/widgets/chat/ui/MessageItem';
+
 import type { Message } from '@/entities/message';
 
 function buildMessage(overrides: Partial<Message>): Message {

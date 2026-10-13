@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { connect, disconnect, setConnectionError } from '@/features/instance-connection';
+
 import { createTestStore } from '@/shared/lib/TestUtils';
+
+import { connect, disconnect, setConnectionError } from '@/features/instance-connection';
 
 afterEach(() => {
   localStorage.clear();

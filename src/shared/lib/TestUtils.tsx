@@ -1,7 +1,9 @@
-import type { ReactElement } from 'react';
-import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { render } from '@testing-library/react';
+
 import { createAppStore } from '@/app/store';
+
+import type { ReactElement } from 'react';
 
 export type TestStore = ReturnType<typeof createAppStore>;
 

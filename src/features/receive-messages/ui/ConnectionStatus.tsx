@@ -1,5 +1,7 @@
 import { useAppSelector } from '@/app/store/ReduxHooks';
+
 import { selectIsInstanceConnected, selectPollingError } from '../model/selectors';
+
 import styles from './ConnectionStatus.module.scss';
 
 export default function ConnectionStatus() {

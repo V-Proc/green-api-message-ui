@@ -1,8 +1,10 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import userEvent from '@testing-library/user-event';
 import { act, fireEvent, screen } from '@testing-library/react';
-import { ConnectionForm } from '@/features/instance-connection';
+import userEvent from '@testing-library/user-event';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { renderWithStore } from '@/shared/lib/TestUtils';
+
+import { ConnectionForm } from '@/features/instance-connection';
 
 afterEach(() => {
   localStorage.clear();

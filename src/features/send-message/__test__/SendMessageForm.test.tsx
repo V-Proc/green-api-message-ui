@@ -1,10 +1,12 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import GreenApi from '@/shared/api/GreenApi';
-import { SendMessageForm } from '@/features/send-message';
+import { createTestStore,renderWithStore } from '@/shared/lib/TestUtils';
+
 import { connect } from '@/features/instance-connection';
-import { renderWithStore, createTestStore } from '@/shared/lib/TestUtils';
+import { SendMessageForm } from '@/features/send-message';
 
 vi.mock('@/shared/api/GreenApi', () => ({
   default: {

@@ -1,9 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import GreenApi from '@/shared/api/GreenApi';
-import type { NotificationReceipt } from '@/shared/api/Types';
+import { createTestStore } from '@/shared/lib/TestUtils';
+
 import { connect } from '@/features/instance-connection';
 import { fetchNotifications } from '@/features/receive-messages';
-import { createTestStore } from '@/shared/lib/TestUtils';
+
+import type { NotificationReceipt } from '@/shared/api/Types';
 
 vi.mock('@/shared/api/GreenApi', () => ({
   default: {

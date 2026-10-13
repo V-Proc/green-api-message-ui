@@ -1,5 +1,7 @@
-import type { Message } from '@/entities/message';
 import { formatTime } from '@/shared/lib/FormatHelpers';
+
+import type { Message } from '@/entities/message';
+
 import styles from './MessageItem.module.scss';
 
 type MessageItemProps = {

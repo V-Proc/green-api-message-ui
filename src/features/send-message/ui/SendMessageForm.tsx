@@ -1,7 +1,11 @@
-import { useEffect, useRef, type KeyboardEvent } from 'react';
-import { useAppDispatch } from '@/app/store/ReduxHooks';
-import { sendMessage } from '@/features/send-message';
+import { type KeyboardEvent,useEffect, useRef } from 'react';
+
 import { Button } from '@/shared/ui';
+
+import { sendMessage } from '@/features/send-message';
+
+import { useAppDispatch } from '@/app/store/ReduxHooks';
+
 import styles from './SendMessageForm.module.scss';
 
 type SendMessageFormProps = {

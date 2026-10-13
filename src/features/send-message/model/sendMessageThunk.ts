@@ -1,9 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState, AppDispatch } from '@/app/store';
-import { addMessage, updateMessageStatus } from '@/entities/message';
-import { upsertChat } from '@/entities/chat';
+
 import GreenApi from '@/shared/api/GreenApi';
 import { MAX_MESSAGE_LENGTH } from '@/shared/config/GreenApiConfig';
+
+import { upsertChat } from '@/entities/chat';
+import { addMessage, updateMessageStatus } from '@/entities/message';
+
+import type { AppDispatch,RootState } from '@/app/store';
 
 interface SendMessageArgs {
   chatId: string;
@@ -53,7 +56,7 @@ export const sendMessage = createAsyncThunk<
     });
 
     dispatch(updateMessageStatus({ chatId, localId, status: 'sent' }));
-  } catch (error) {
+  } catch {
     dispatch(updateMessageStatus({ chatId, localId, status: 'failed' }));
   }
 });

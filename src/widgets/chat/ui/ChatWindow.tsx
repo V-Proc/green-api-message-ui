@@ -1,9 +1,14 @@
-import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
-import { selectSelectedChat } from '@/entities/chat';
-import { SendMessageForm } from '@/features/send-message';
-import { disconnect } from '@/features/instance-connection';
 import { Avatar, Button } from '@/shared/ui';
+
+import { selectSelectedChat } from '@/entities/chat';
+
+import { disconnect } from '@/features/instance-connection';
+import { SendMessageForm } from '@/features/send-message';
+
+import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
+
 import MessageList from './MessageList';
+
 import styles from './ChatWindow.module.scss';
 
 export default function ChatWindow() {

@@ -1,9 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState, AppDispatch } from '@/app/store';
-import { addMessage } from '@/entities/message';
-import { upsertChat } from '@/entities/chat';
+
 import GreenApi from '@/shared/api/GreenApi';
+
+import { upsertChat } from '@/entities/chat';
+import { addMessage } from '@/entities/message';
+
 import { setPollingError } from './pollingSlice';
+
+import type { AppDispatch,RootState } from '@/app/store';
 
 export const fetchNotifications = createAsyncThunk<
   boolean,

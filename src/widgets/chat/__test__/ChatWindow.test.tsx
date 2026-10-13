@@ -1,10 +1,14 @@
-import { describe, expect, it } from 'vitest';
-import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { selectChat, upsertChat } from '@/entities/chat';
-import { connect } from '@/features/instance-connection';
-import { ChatWindow } from '@/widgets/chat';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
+
 import { createTestStore, renderWithStore } from '@/shared/lib/TestUtils';
+
+import { selectChat, upsertChat } from '@/entities/chat';
+
+import { connect } from '@/features/instance-connection';
+
+import { ChatWindow } from '@/widgets/chat';
 
 function renderSelectedChat() {
   const store = createTestStore();

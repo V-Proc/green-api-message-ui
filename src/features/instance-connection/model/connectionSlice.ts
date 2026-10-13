@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+
 import type { InstanceCredentials } from '@/shared/api/Types';
 
 interface ConnectionState extends InstanceCredentials {

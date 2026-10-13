@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { addMessage, updateMessageStatus, selectMessagesByChatId } from '@/entities/message';
-import type { Message } from '@/entities/message';
+
 import { createTestStore } from '@/shared/lib/TestUtils';
+
+import { addMessage, selectMessagesByChatId,updateMessageStatus } from '@/entities/message';
+
+import type { Message } from '@/entities/message';
 
 function buildMessage(overrides: Partial<Message>): Message {
   return {

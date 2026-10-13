@@ -1,8 +1,12 @@
-import { useEffect, useState, type FormEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
+import { type FormEvent,useEffect, useState } from 'react';
+
+import { Button, TextField } from '@/shared/ui';
+
 import { connect } from '@/features/instance-connection';
 import { selectCredentials } from '@/features/instance-connection/model/selectors';
-import { Button, TextField } from '@/shared/ui';
+
+import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
+
 import styles from './ConnectionForm.module.scss';
 
 const STORAGE_KEY = 'green-api-credentials';

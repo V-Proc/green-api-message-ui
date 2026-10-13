@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
-import { selectIsConnected } from '@/features/instance-connection';
+
 import { POLLING_INTERVAL_MS } from '@/shared/config/GreenApiConfig';
+
+import { useAppDispatch, useAppSelector } from '@/app/store/ReduxHooks';
+
 import { fetchNotifications } from './fetchNotificationsThunk';
+import { selectIsInstanceConnected } from './selectors';
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -12,7 +15,7 @@ function delay(ms: number): Promise<void> {
 
 export function useNotificationsPolling(): void {
   const dispatch = useAppDispatch();
-  const isConnected = useAppSelector(selectIsConnected);
+  const isConnected = useAppSelector(selectIsInstanceConnected);
 
   useEffect(() => {
     if (!isConnected) {

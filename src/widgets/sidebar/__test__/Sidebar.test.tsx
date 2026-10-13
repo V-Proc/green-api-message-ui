@@ -1,9 +1,12 @@
-import { describe, expect, it } from 'vitest';
-import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { selectChat, upsertChat } from '@/entities/chat';
-import { Sidebar } from '@/widgets/sidebar';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it } from 'vitest';
+
 import { createTestStore, renderWithStore, type TestStore } from '@/shared/lib/TestUtils';
+
+import { selectChat, upsertChat } from '@/entities/chat';
+
+import { Sidebar } from '@/widgets/sidebar';
 
 function seedChat(
   store: TestStore,

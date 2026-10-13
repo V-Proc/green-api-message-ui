@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { useAppSelector } from '@/app/store/ReduxHooks';
+
 import { selectMessagesByChatId } from '@/entities/message';
+
+import { useAppSelector } from '@/app/store/ReduxHooks';
+
 import MessageItem from './MessageItem';
+
 import styles from './MessageList.module.scss';
 
 type MessageListProps = {
