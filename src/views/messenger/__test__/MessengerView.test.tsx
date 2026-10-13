@@ -43,7 +43,7 @@ describe('MessengerView', () => {
   it('сайдбар и окно чата работают с общим стором: выбор чата открывает переписку', async () => {
     const user = userEvent.setup();
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
     store.dispatch(
       upsertChat({
         chatId: '10000000',
@@ -64,7 +64,7 @@ describe('MessengerView', () => {
 
   it('запускает polling входящих уведомлений при подключении', async () => {
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     renderWithStore(<MessengerView />, store);
 
@@ -83,7 +83,7 @@ describe('MessengerView', () => {
 
   it('останавливает polling при размонтировании', async () => {
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     const { unmount } = renderWithStore(<MessengerView />, store);
 

@@ -1,5 +1,4 @@
 import {
-  API_URL,
   GREEN_API_METHODS,
   RECEIVE_TIMEOUT_SECONDS,
 } from '@/shared/config/GreenApiConfig';
@@ -21,13 +20,21 @@ function buildUrl(
   suffix = '',
   query = '',
 ): string {
-  const { idInstance, apiTokenInstance } = credentials;
+  const { apiUrl, idInstance, apiTokenInstance } = credentials;
 
-  if (!idInstance || !apiTokenInstance) {
+  if (!apiUrl || !idInstance || !apiTokenInstance) {
     throw new GreenApiError('Не заданы параметры подключения инстанса');
   }
 
-  return `${API_URL}/waInstance${idInstance}/${method}/${apiTokenInstance}${suffix}${query}`;
+  const base = apiUrl.replace(/\/+$/, '');
+  const path = `/waInstance${idInstance}/${method}/${apiTokenInstance}${suffix}${query}`;
+  const isDev = import.meta.env.DEV && import.meta.env.MODE !== 'test';
+
+  if (isDev) {
+    return `/green-api-proxy/${encodeURIComponent(base)}${path}`;
+  }
+
+  return `${base}${path}`;
 }
 
 async function request<T>(url: string, options: { method: HttpMethod; body?: string }): Promise<T> {
@@ -36,21 +43,42 @@ async function request<T>(url: string, options: { method: HttpMethod; body?: str
   try {
     response = await fetch(url, {
       method: options.method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: options.body ? { 'Content-Type': 'application/json' } : {},
       body: options.body,
     });
-  } catch {
-    throw new GreenApiError('Нет соединения с сервером GREEN-API');
+  } catch (error) {
+    console.error('[GreenApi] запрос не выполнен', url, error);
+
+    throw new GreenApiError(
+      'Нет соединения с сервером GREEN-API (проверьте apiUrl инстанса, сеть и консоль браузера на CORS)',
+    );
   }
 
+  const text = await response.text();
+
   if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as GreenApiErrorPayload | null;
-    const message = payload?.error ?? `Ошибка запроса (${response.status})`;
+    let message = `Ошибка запроса (${response.status})`;
+
+    if (text) {
+      try {
+        message = ((JSON.parse(text) as GreenApiErrorPayload).error ?? message) || message;
+      } catch {
+        message = text;
+      }
+    }
 
     throw new GreenApiError(message, response.status);
   }
 
-  return (await response.json()) as T;
+  if (!text) {
+    return null as unknown as T;
+  }
+
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new GreenApiError('Некорректный ответ сервера (ожидался JSON)', response.status);
+  }
 }
 
 const GreenApi = {

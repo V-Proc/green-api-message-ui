@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import GreenApi from '@/shared/api/GreenApi';
+import { GreenApiError } from '@/shared/lib/GreenApiError';
 
 import { upsertChat } from '@/entities/chat';
 import { addMessage } from '@/entities/message';
@@ -14,13 +15,11 @@ export const fetchNotifications = createAsyncThunk<
   void,
   { state: RootState; dispatch: AppDispatch }
 >('receive-messages/fetchNotifications', async (_, { dispatch, getState }) => {
-  const credentials = getState().connection;
+  const { apiUrl, idInstance, apiTokenInstance } = getState().connection;
+  const credentials = { apiUrl, idInstance, apiTokenInstance };
 
   try {
-    const notification = await GreenApi.receiveNotification({
-      idInstance: credentials.idInstance,
-      apiTokenInstance: credentials.apiTokenInstance,
-    });
+    const notification = await GreenApi.receiveNotification(credentials);
 
     if (!notification?.body) {
       dispatch(setPollingError(null));
@@ -57,22 +56,29 @@ export const fetchNotifications = createAsyncThunk<
           markUnread: true,
         }),
       );
+    } else {
+      console.error(
+        '[notifications] необработанное уведомление',
+        body.typeWebhook,
+        body.messageData?.typeMessage,
+      );
     }
 
-    await GreenApi.deleteNotification(
-      {
-        idInstance: credentials.idInstance,
-        apiTokenInstance: credentials.apiTokenInstance,
-      },
-      receiptId,
-    );
+    await GreenApi.deleteNotification(credentials, receiptId);
     dispatch(setPollingError(null));
 
     return true;
   } catch (error) {
-    dispatch(
-      setPollingError(error instanceof Error ? error.message : 'Ошибка получения уведомлений'),
-    );
+    const reason = error instanceof Error ? error.message : 'Ошибка получения уведомлений';
+    const httpStatus = error instanceof GreenApiError ? error.status : 0;
+    const isTransient = httpStatus === 0 || httpStatus >= 500;
+
+    if (isTransient) {
+      console.error('[notifications] временный сбой опроса, повторим в следующем цикле:', reason);
+      dispatch(setPollingError(null));
+    } else {
+      dispatch(setPollingError(reason));
+    }
 
     return false;
   }

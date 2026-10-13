@@ -11,7 +11,7 @@ export const selectIsConnected = createSelector(
 
 export const selectCredentials = createSelector(
   [selectConnectionState],
-  ({ idInstance, apiTokenInstance }) => ({ idInstance, apiTokenInstance }),
+  ({ apiUrl, idInstance, apiTokenInstance }) => ({ apiUrl, idInstance, apiTokenInstance }),
 );
 
 export const selectConnectionError = createSelector(

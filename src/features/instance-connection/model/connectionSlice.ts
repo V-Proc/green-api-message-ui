@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
+import { DEFAULT_API_URL } from '@/shared/config/GreenApiConfig';
+
 import type { InstanceCredentials } from '@/shared/api/Types';
 
 interface ConnectionState extends InstanceCredentials {
@@ -14,12 +16,12 @@ function readStoredCredentials(): InstanceCredentials {
     const raw = localStorage.getItem(STORAGE_KEY);
 
     if (!raw) {
-      return { idInstance: '', apiTokenInstance: '' };
+      return { apiUrl: DEFAULT_API_URL, idInstance: '', apiTokenInstance: '' };
     }
 
     return JSON.parse(raw) as InstanceCredentials;
   } catch {
-    return { idInstance: '', apiTokenInstance: '' };
+    return { apiUrl: DEFAULT_API_URL, idInstance: '', apiTokenInstance: '' };
   }
 }
 
@@ -34,6 +36,7 @@ const connectionSlice = createSlice({
   initialState,
   reducers: {
     connect(state, action: PayloadAction<InstanceCredentials>) {
+      state.apiUrl = action.payload.apiUrl;
       state.idInstance = action.payload.idInstance;
       state.apiTokenInstance = action.payload.apiTokenInstance;
       state.isConnected = true;

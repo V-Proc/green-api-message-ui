@@ -3,16 +3,22 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import GreenApi from '@/shared/api/GreenApi';
 import { GreenApiError } from '@/shared/lib/GreenApiError';
 
-const credentials = { idInstance: '1101234567', apiTokenInstance: 'token-abc' };
-const BASE = 'https://api.green-api.com/waInstance1101234567';
+const credentials = {
+  apiUrl: 'https://3100.api.green-api.com',
+  idInstance: '1101234567',
+  apiTokenInstance: 'token-abc',
+};
+const BASE = 'https://3100.api.green-api.com/waInstance1101234567';
 
 function mockFetchResponse(body: unknown, ok = true, status = 200) {
+  const text = body === null ? '' : typeof body === 'string' ? body : JSON.stringify(body);
+
   vi.stubGlobal(
     'fetch',
     vi.fn().mockResolvedValue({
       ok,
       status,
-      json: () => Promise.resolve(body),
+      text: () => Promise.resolve(text),
     }),
   );
 }
@@ -72,7 +78,7 @@ describe('GreenApi', () => {
       vi.stubGlobal('fetch', vi.fn());
 
       expect(() =>
-        GreenApi.sendMessage({ idInstance: '', apiTokenInstance: '' }, {
+        GreenApi.sendMessage({ apiUrl: '', idInstance: '', apiTokenInstance: '' }, {
           chatId: '1',
           message: 'текст',
         }),
@@ -88,9 +94,9 @@ describe('GreenApi', () => {
 
       await GreenApi.receiveNotification(credentials);
 
-      expect(fetch).toHaveBeenCalledWith(`${BASE}/receiveNotification/token-abc?receiveTimeout=10`, {
+      expect(fetch).toHaveBeenCalledWith(`${BASE}/receiveNotification/token-abc?receiveTimeout=5`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {},
         body: undefined,
       });
     });
@@ -101,6 +107,14 @@ describe('GreenApi', () => {
       const result = await GreenApi.receiveNotification(credentials);
 
       expect(result).toBeNull();
+    });
+
+    it('бросает GreenApiError, если успешный ответ не является JSON', async () => {
+      mockFetchResponse('<html>gateway timeout</html>', true, 200);
+
+      await expect(GreenApi.receiveNotification(credentials)).rejects.toThrow(
+        'Некорректный ответ сервера (ожидался JSON)',
+      );
     });
   });
 

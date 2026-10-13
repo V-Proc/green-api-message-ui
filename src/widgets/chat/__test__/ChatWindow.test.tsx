@@ -12,7 +12,7 @@ import { ChatWindow } from '@/widgets/chat';
 
 function renderSelectedChat() {
   const store = createTestStore();
-  store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+  store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
   store.dispatch(
     upsertChat({
       chatId: '10000000',

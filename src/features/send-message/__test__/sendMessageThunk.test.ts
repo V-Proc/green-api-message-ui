@@ -18,7 +18,7 @@ let store: ReturnType<typeof createTestStore>;
 
 beforeEach(() => {
   store = createTestStore();
-  store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+  store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
   vi.clearAllMocks();
 });
 
@@ -34,7 +34,7 @@ describe('sendMessageThunk', () => {
     expect(message.direction).toBe('outgoing');
     expect(message.status).toBe('sent');
     expect(GreenApi.sendMessage).toHaveBeenCalledWith(
-      { idInstance: '111', apiTokenInstance: 'aaa' },
+      { apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' },
       { chatId: 'c1', message: 'Привет!' },
     );
   });
@@ -59,6 +59,17 @@ describe('sendMessageThunk', () => {
     await store.dispatch(sendMessage({ chatId: 'c1', text: 'Привет!' }));
 
     expect(store.getState().messages.byChatId.c1[0].status).toBe('failed');
+  });
+
+  it('сохраняет причину ошибки в поле error сообщения', async () => {
+    vi.mocked(GreenApi.sendMessage).mockRejectedValue(new Error('Validation failed'));
+
+    await store.dispatch(sendMessage({ chatId: 'c1', text: 'Привет!' }));
+
+    expect(store.getState().messages.byChatId.c1[0]).toMatchObject({
+      status: 'failed',
+      error: 'Validation failed',
+    });
   });
 
   it('не отправляет пустой текст', async () => {

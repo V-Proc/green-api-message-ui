@@ -24,7 +24,7 @@ export const sendMessage = createAsyncThunk<
     return;
   }
 
-  const { idInstance, apiTokenInstance } = getState().connection;
+  const { apiUrl, idInstance, apiTokenInstance } = getState().connection;
 
   const localId = crypto.randomUUID();
   const timestamp = Date.now();
@@ -50,13 +50,16 @@ export const sendMessage = createAsyncThunk<
   );
 
   try {
-    await GreenApi.sendMessage({ idInstance, apiTokenInstance }, {
+    await GreenApi.sendMessage({ apiUrl, idInstance, apiTokenInstance }, {
       chatId,
       message: trimmedText,
     });
 
     dispatch(updateMessageStatus({ chatId, localId, status: 'sent' }));
-  } catch {
-    dispatch(updateMessageStatus({ chatId, localId, status: 'failed' }));
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : 'Неизвестная ошибка отправки';
+
+    console.error('[sendMessage] не отправлено', chatId, reason);
+    dispatch(updateMessageStatus({ chatId, localId, status: 'failed', error: reason }));
   }
 });

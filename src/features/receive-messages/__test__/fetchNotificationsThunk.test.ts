@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import GreenApi from '@/shared/api/GreenApi';
+import { GreenApiError } from '@/shared/lib/GreenApiError';
 import { createTestStore } from '@/shared/lib/TestUtils';
 
 import { connect } from '@/features/instance-connection';
@@ -42,7 +43,7 @@ let store: ReturnType<typeof createTestStore>;
 
 beforeEach(() => {
   store = createTestStore();
-  store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+  store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
   vi.clearAllMocks();
 });
 
@@ -68,7 +69,7 @@ describe('fetchNotificationsThunk', () => {
       unread: true,
     });
     expect(GreenApi.deleteNotification).toHaveBeenCalledWith(
-      { idInstance: '111', apiTokenInstance: 'aaa' },
+      { apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' },
       1234567,
     );
     expect(store.getState().polling.lastError).toBeNull();
@@ -110,28 +111,43 @@ describe('fetchNotificationsThunk', () => {
     expect(GreenApi.deleteNotification).toHaveBeenCalledWith(expect.anything(), 5);
   });
 
-  it('фиксирует ошибку polling при сбое получения', async () => {
-    vi.mocked(GreenApi.receiveNotification).mockRejectedValue(new Error('Сетевой сбой'));
+  it('фиксирует ошибку polling при ошибке API (4xx)', async () => {
+    vi.mocked(GreenApi.receiveNotification).mockRejectedValue(
+      new GreenApiError('Неверный apiTokenInstance', 400),
+    );
 
     const received = await store.dispatch(fetchNotifications()).unwrap();
 
     expect(received).toBe(false);
-    expect(store.getState().polling.lastError).toBe('Сетевой сбой');
+    expect(store.getState().polling.lastError).toBe('Неверный apiTokenInstance');
+  });
+
+  it('не показывает ошибку при преходящем сетевом/5xx сбое', async () => {
+    vi.mocked(GreenApi.receiveNotification).mockRejectedValue(
+      new GreenApiError('Proxy error: read ETIMEDOUT', 502),
+    );
+
+    const received = await store.dispatch(fetchNotifications()).unwrap();
+
+    expect(received).toBe(false);
+    expect(store.getState().polling.lastError).toBeNull();
   });
 
   it('фиксирует ошибку при неудачном подтверждении удаления', async () => {
     vi.mocked(GreenApi.receiveNotification).mockResolvedValue(textNotification('текст'));
-    vi.mocked(GreenApi.deleteNotification).mockRejectedValue(new Error('Не удалено'));
+    vi.mocked(GreenApi.deleteNotification).mockRejectedValue(
+      new GreenApiError('Не найдено сообщение', 400),
+    );
 
     const received = await store.dispatch(fetchNotifications()).unwrap();
 
     expect(received).toBe(false);
-    expect(store.getState().polling.lastError).toBe('Не удалено');
+    expect(store.getState().polling.lastError).toBe('Не найдено сообщение');
   });
 
   it('очищает предыдущую ошибку после успешного цикла', async () => {
     vi.mocked(GreenApi.receiveNotification)
-      .mockRejectedValueOnce(new Error('Сетевой сбой'))
+      .mockRejectedValueOnce(new GreenApiError('Ошибка запроса', 400))
       .mockResolvedValueOnce(null);
 
     await store.dispatch(fetchNotifications()).unwrap();

@@ -46,7 +46,7 @@ describe('useNotificationsPolling', () => {
   it('начинает polling сразу после подключения', async () => {
     vi.mocked(GreenApi.receiveNotification).mockResolvedValue(null);
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     const { unmount } = renderPollingHook(store);
 
@@ -74,7 +74,7 @@ describe('useNotificationsPolling', () => {
     vi.mocked(GreenApi.receiveNotification).mockResolvedValue(receipt);
     vi.mocked(GreenApi.deleteNotification).mockResolvedValue({ result: true });
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     const { unmount } = renderPollingHook(store);
 

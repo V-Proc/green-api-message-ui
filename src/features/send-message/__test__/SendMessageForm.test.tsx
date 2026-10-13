@@ -18,7 +18,7 @@ vi.mock('@/shared/api/GreenApi', () => ({
 
 function setup() {
   const store = createTestStore();
-  store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+  store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
   vi.mocked(GreenApi.sendMessage).mockResolvedValue({ idMessage: 'api-id' });
 
   return renderWithStore(<SendMessageForm chatId="c1" />, store);

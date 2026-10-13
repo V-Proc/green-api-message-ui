@@ -12,7 +12,7 @@ describe('connectionSlice', () => {
   it('connect сохраняет креденшалы и подключает', () => {
     const store = createTestStore();
 
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     const { connection } = store.getState();
 
@@ -26,7 +26,7 @@ describe('connectionSlice', () => {
     localStorage.setItem('green-api-credentials', JSON.stringify({ idInstance: '111' }));
     const store = createTestStore();
 
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
     store.dispatch(disconnect());
 
     expect(store.getState().connection.isConnected).toBe(false);
@@ -45,7 +45,7 @@ describe('connectionSlice', () => {
     const store = createTestStore();
 
     store.dispatch(setConnectionError('Сетевой сбой'));
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     expect(store.getState().connection.error).toBeNull();
   });

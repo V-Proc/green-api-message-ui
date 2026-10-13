@@ -53,13 +53,18 @@ describe('messagesSlice', () => {
     expect(messages[0].text).toBe('первый');
   });
 
-  it('updateMessageStatus меняет статус по локальному id', () => {
+  it('updateMessageStatus меняет статус и причину по локальному id', () => {
     const store = createTestStore();
 
     store.dispatch(addMessage(buildMessage({ id: 'a', status: 'pending' })));
-    store.dispatch(updateMessageStatus({ chatId: 'c1', localId: 'a', status: 'sent' }));
+    store.dispatch(
+      updateMessageStatus({ chatId: 'c1', localId: 'a', status: 'failed', error: 'Ошибка (400)' }),
+    );
 
-    expect(store.getState().messages.byChatId.c1[0].status).toBe('sent');
+    expect(store.getState().messages.byChatId.c1[0]).toMatchObject({
+      status: 'failed',
+      error: 'Ошибка (400)',
+    });
   });
 
   it('updateMessageStatus не падает на несуществующем сообщении', () => {

@@ -31,13 +31,19 @@ const messagesSlice = createSlice({
     },
     updateMessageStatus(
       state,
-      action: PayloadAction<{ chatId: string; localId: string; status: Message['status'] }>,
+      action: PayloadAction<{
+        chatId: string;
+        localId: string;
+        status: Message['status'];
+        error?: string;
+      }>,
     ) {
       const list = state.byChatId[action.payload.chatId];
       const message = list?.find((item) => item.id === action.payload.localId);
 
       if (message) {
         message.status = action.payload.status;
+        message.error = action.payload.error;
       }
     },
   },

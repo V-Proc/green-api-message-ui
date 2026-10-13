@@ -1,4 +1,5 @@
 export interface InstanceCredentials {
+  apiUrl: string;
   idInstance: string;
   apiTokenInstance: string;
 }

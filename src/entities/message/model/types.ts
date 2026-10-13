@@ -9,4 +9,5 @@ export interface Message {
   direction: MessageDirection;
   timestamp: number;
   status: MessageStatus;
+  error?: string;
 }

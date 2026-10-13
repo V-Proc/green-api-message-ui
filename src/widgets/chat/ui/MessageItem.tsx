@@ -39,7 +39,7 @@ export default function MessageItem({ message, showDateDivider }: MessageItemPro
           <p className={styles['message-item__text']}>{message.text}</p>
           <span className={styles['message-item__meta']}>
             {message.status === 'failed' ? (
-              <span className={styles['message-item__status']}>
+              <span className={styles['message-item__status']} title={message.error}>
                 <svg
                   className={styles['message-item__failed-icon']}
                   width="14"

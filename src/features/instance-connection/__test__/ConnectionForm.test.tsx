@@ -18,7 +18,7 @@ describe('ConnectionForm', () => {
 
     await user.click(screen.getByRole('button', { name: 'Подключиться' }));
 
-    expect(screen.getByText('Заполните оба поля')).toBeInTheDocument();
+    expect(screen.getByText('Заполните все поля')).toBeInTheDocument();
     expect(store.getState().connection.isConnected).toBe(false);
   });
 
@@ -26,12 +26,15 @@ describe('ConnectionForm', () => {
     const user = userEvent.setup();
     const { store } = renderWithStore(<ConnectionForm />);
 
+    await user.clear(screen.getByPlaceholderText(/apiUrl/));
+    await user.type(screen.getByPlaceholderText(/apiUrl/), 'https://3100.api.green-api.com');
     await user.type(screen.getByPlaceholderText('idInstance'), '1101234567');
     await user.type(screen.getByPlaceholderText('apiTokenInstance'), 'secret');
     await user.click(screen.getByRole('button', { name: 'Подключиться' }));
 
     expect(store.getState().connection.isConnected).toBe(true);
     expect(JSON.parse(localStorage.getItem('green-api-credentials') ?? '{}')).toEqual({
+      apiUrl: 'https://3100.api.green-api.com',
       idInstance: '1101234567',
       apiTokenInstance: 'secret',
     });
@@ -54,7 +57,7 @@ describe('ConnectionForm', () => {
     renderWithStore(<ConnectionForm />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Подключиться' }));
-    expect(screen.getByText('Заполните оба поля')).toBeInTheDocument();
+    expect(screen.getByText('Заполните все поля')).toBeInTheDocument();
 
     act(() => {
       vi.runAllTimers();

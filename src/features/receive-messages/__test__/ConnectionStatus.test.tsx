@@ -26,7 +26,7 @@ describe('ConnectionStatus', () => {
 
   it('показывает статус получения при подключении', () => {
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
 
     renderStatus(<ConnectionStatus />, store);
 
@@ -35,7 +35,7 @@ describe('ConnectionStatus', () => {
 
   it('показывает текст ошибки polling', () => {
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
     store.dispatch(setPollingError('Сетевой сбой'));
 
     renderStatus(<ConnectionStatus />, store);
@@ -45,7 +45,7 @@ describe('ConnectionStatus', () => {
 
   it('setConnectionError из connectionSlice не отображается как ошибка polling', () => {
     const store = createTestStore();
-    store.dispatch(connect({ idInstance: '111', apiTokenInstance: 'aaa' }));
+    store.dispatch(connect({ apiUrl: 'https://api.green-api.com', idInstance: '111', apiTokenInstance: 'aaa' }));
     store.dispatch(setConnectionError('Другая ошибка'));
 
     renderStatus(<ConnectionStatus />, store);
