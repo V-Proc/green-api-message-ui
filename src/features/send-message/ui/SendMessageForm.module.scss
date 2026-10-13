@@ -31,6 +31,15 @@
 }
 
 .message-form__send {
+  padding: 0;
+  flex-shrink: 0;
   width: 48px;
   height: 48px;
+  border-radius: 50%;
+
+  // Стрелка занимает 60% кнопки; вектор масштабируется через viewBox.
+  svg {
+    width: 60%;
+    height: 60%;
+  }
 }

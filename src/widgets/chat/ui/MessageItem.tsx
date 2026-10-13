@@ -18,10 +18,6 @@ export default function MessageItem({ message, showDateDivider }: MessageItemPro
     bubbleClass.push(styles['message-item__bubble_out']);
   }
 
-  if (message.status === 'failed') {
-    bubbleClass.push(styles['message-item__bubble_failed']);
-  }
-
   const itemClass = [styles['message-item']];
 
   if (isOutgoing) {
@@ -43,7 +39,20 @@ export default function MessageItem({ message, showDateDivider }: MessageItemPro
           <p className={styles['message-item__text']}>{message.text}</p>
           <span className={styles['message-item__meta']}>
             {message.status === 'failed' ? (
-              <span className={styles['message-item__status']}>Не отправлено</span>
+              <span className={styles['message-item__status']}>
+                <svg
+                  className={styles['message-item__failed-icon']}
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <circle cx="8" cy="8" r="6.7" stroke="currentColor" strokeWidth="1.4" fill="none" />
+                  <path d="M8 4.4v4.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="8" cy="11.6" r="0.9" fill="currentColor" />
+                </svg>
+                Не отправлено
+              </span>
             ) : null}
             <span className={styles['message-item__time']}>{formatTime(message.timestamp)}</span>
             {isOutgoing && message.status === 'sent' ? (

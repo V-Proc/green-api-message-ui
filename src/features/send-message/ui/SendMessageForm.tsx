@@ -59,8 +59,14 @@ export default function SendMessageForm({ chatId }: SendMessageFormProps) {
         aria-label="Отправить"
         onClick={submit}
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3.4 20.4 20.85 12.92a1 1 0 0 0 0-1.84L3.4 3.6a.9.9 0 0 0-1.25 1.06L4.5 11.1a1 1 0 0 0 .86.83l9.24 1.07-9.24 1.07a1 1 0 0 0-.86.83l-2.35 6.44a.9.9 0 0 0 1.25 1.06Z" />
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 21V4M4 12 12 4 20 12"
+            stroke="currentColor"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </Button>
     </form>

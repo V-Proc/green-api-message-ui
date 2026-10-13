@@ -37,14 +37,6 @@
       color: rgba(255, 255, 255, 0.9);
     }
   }
-
-  &_failed {
-    background: var(--color-danger);
-
-    .message-item__status {
-      color: rgba(255, 255, 255, 0.95);
-    }
-  }
 }
 
 .message-item__text {
@@ -66,15 +58,19 @@
 }
 
 .message-item__status {
-  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+}
+
+.message-item__failed-icon {
+  color: var(--color-danger);
+  flex-shrink: 0;
 }
 
 .message-item__time {
   color: inherit;
-}
-
-.message-item__status_failed {
-  color: var(--color-danger);
 }
 
 .message-item__tick {
