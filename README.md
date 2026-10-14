@@ -4,7 +4,7 @@
 
 Возможности (минимальный набор):
 
-- подключение к инстансу GREEN-API по `idInstance` + `apiTokenInstance`
+- подключение к инстансу GREEN-API по `apiUrl` + `idInstance` + `apiTokenInstance`
 - создание чата по ID получателя, список чатов, непрочитанные
 - отправка текста методом [`SendMessage`](https://green-api.com/v3/docs/api/sending/SendMessage/)
 - приём входящих методом HTTP API: `ReceiveNotification` → `DeleteNotification` (long-poll)
@@ -17,7 +17,7 @@
 - React 19 + TypeScript
 - Redux Toolkit + react-redux
 - Vite 6, SCSS Modules (BEM)
-- Vitest + Testing Library (92 теста)
+- Vitest + Testing Library (95 тестов)
 - Архитектура: Feature-Sliced Design (`src/app`, `views`, `widgets`, `features`, `entities`, `shared`)
 
 ## Требования
@@ -33,29 +33,29 @@ nvm use 22
 
 ## Установка и запуск
 
+Конфигурации через файлы нет: `.env` не используется, все параметры (`apiUrl`, `idInstance`, `apiTokenInstance`) вводятся в форме подключения и хранятся в localStorage (`green-api-credentials`). Ключи GREEN-API выдаются в личном кабинете (см. секцию ниже).
+
 ```bash
 nvm use 22          # при необходимости
 npm install
 npm run dev         # dev-сервер: http://localhost:5173
 ```
 
-В dev-режиме запросы идут не напрямую в `https://<кластер>.api.green-api.com` (он не отдаёт CORS-заголовки, браузер блокирует и preflight, и чтение ответов), а через same-origin прокси dev-сервера: `/green-api-proxy/<encodeURIComponent(apiUrl)>/waInstance…`. Прокси реализован плагином в `vite.config.ts` и включается автоматически в dev; в тестах и продакшен-сборке адрес остаётся прямым.
+Если порт 5173 занят, Vite возьмёт следующий (5174) — итоговый URL печатается в консоли запуска.
+
+В dev-режиме запросы идут не напрямую в `https://<кластер>.api.green-api.com` (он не отдаёт CORS-заголовки, браузер блокирует и preflight, и чтение ответов), а через same-origin прокси dev-сервера: `/green-api-proxy/<encodeURIComponent(apiUrl)>/waInstance…`. Прокси реализован плагином в `vite.config.ts` и включается автоматически в dev; в тестах адрес остаётся прямым.
 
 Другие команды:
 
 | Команда | Действие |
 |---|---|
 | `npm run dev` | dev-сервер с HMR (http://localhost:5173) |
-| `npm run build` | проверка типов (tsc) + продакшен-сборка в `dist/` |
-| `npm run preview` | раздача продакшен-сборки (http://localhost:4173) |
+| `npm run build` | проверка типов (tsc) + сборка бандла в `dist/` |
+| `npm run preview` | локальная раздача собранного бандла (http://localhost:4173) |
 | `npm test` | прогон всех тестов (vitest run) |
 | `npm run test:watch` | тесты в watch-режиме |
 | `npm run lint` | ESLint (код-стайл + границы FSD по AGENTS.md) |
 | `npm run lint:fix` | то же с автофиксом |
-
-### Продакшен-сборка
-
-Так как у GREEN-API нет CORS, собранное приложение (`npm run build`) должно обслуживаться с **обратным прокси на тот же origin** (nginx/Caddy: `/green-api-proxy/<encodeURIComponent(apiUrl)>/... → https://<кластер>.api.green-api.com/...`) или через свой бэкенд. Простая раздача статики (`npm run preview`, файловый хостинг) будет ловить CORS-ошибки — это ожидаемо.
 
 ---
 
